@@ -10,13 +10,13 @@ import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {PlaygroundApplication.class})
 @TestPropertySource(properties = {"spring.main.allow-bean-definition-overriding=true"})
-class MyFirstControllerTest {
+class MyFirstController_should {
 
     @LocalServerPort
     int port;
 
     @Test
-    void greets_users() {
+    void greet_users() {
         given().
             port(port).
             queryParam("name", "Joshua").
