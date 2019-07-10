@@ -16,7 +16,7 @@ class MyFirstController_should {
     int port;
 
     @Test
-    void greet_users() {
+    void greet_users_by_name() {
         given().
             port(port).
             queryParam("name", "Joshua").
@@ -24,6 +24,16 @@ class MyFirstController_should {
             get("/greeting").
         then().
             statusCode(200).assertThat().body(equalTo("Hello Joshua"));
+    }
+
+    @Test
+    void greet_users() {
+        given().
+            port(port).
+        when().
+            get("/greeting").
+        then().
+            statusCode(200).assertThat().body(equalTo("Hello there"));
     }
 
 }
