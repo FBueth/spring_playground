@@ -15,10 +15,12 @@ public class TokenReceiver {
         this.httpClient = HttpClient.newHttpClient();
     }
 
-    public String requestToken(String sender) {
+    public Token requestToken(String sender) {
         HttpRequest request = createHttpRequest(sender);
         HttpResponse<String> response = execute(request);
-        return response.body();
+        String tokenResponse = response.body();
+        Token token = new Token(sender, tokenResponse);
+        return token;
     }
 
     private HttpRequest createHttpRequest(String sender) {

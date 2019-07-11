@@ -61,9 +61,9 @@ class TokenReceiver_should {
         mockWebServer.enqueue(new MockResponse().setBody("abc"));
 
         //when
-        String token = tokenReceiver.requestToken("123");
+        Token token = tokenReceiver.requestToken("123");
 
         //then
-        assertEquals("abc", token);
+        assertEquals("123_abc", token.getTokenValue());
     }
 }
