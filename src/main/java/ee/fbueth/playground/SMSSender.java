@@ -29,7 +29,7 @@ public class SMSSender {
 
         return HttpRequest.newBuilder()
                 .uri(uri)
-                .header("token", token)
+                .header("auth", token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
     }
