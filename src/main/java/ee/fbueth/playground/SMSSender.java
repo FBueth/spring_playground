@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class SMSSender {
+    private static final String CONTENT_TYPE = "content-type";
 
     private URI uri;
     private String token;
@@ -29,6 +30,7 @@ public class SMSSender {
 
         return HttpRequest.newBuilder()
                 .uri(uri)
+                .header(CONTENT_TYPE, "application/json")
                 .header("auth", token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
