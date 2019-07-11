@@ -14,6 +14,11 @@ public class SMS {
         this.text = builder.text;
     }
 
+    public String toJson() {
+        String template = "{\"senderNumber\":\"%s\",\"senderName\":\"%s\",\"receiver\":%s,\"text\":\"%s\"}";
+        return String.format(template, this.senderNumber, this.senderName, this.receiver, this.text);
+    }
+
     public static class SMSBuilder {
         private String senderNumber;
         private String senderName;
