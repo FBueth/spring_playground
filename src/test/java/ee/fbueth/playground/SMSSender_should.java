@@ -24,9 +24,9 @@ class SMSSender_should {
         mockWebServer.start();
 
         URI uri = new URI(mockWebServer.url("/").toString());
-        sms = new SMS.SMSBuilder().from("123").withName("Florian").to("987").withText("Proekspert").build();
-        String token = "123_abc";
+        Token token = new Token("123", "abc");
         smsSender = new SMSSender(uri, token);
+        sms = new SMS.SMSBuilder().from("123456789").withName("Me").to("987654321").withText("Hello world!").build();
     }
 
     @Test
