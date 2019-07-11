@@ -52,7 +52,7 @@ class TokenReceiver_should {
 
         //then
         RecordedRequest recordedRequest = mockWebServer.takeRequest(1, TimeUnit.SECONDS);
-        assertEquals("123", recordedRequest.getHeader("sender"));
+        assertEquals("123", recordedRequest.getHeader("senderID"));
     }
 
     @Test

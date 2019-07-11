@@ -25,7 +25,7 @@ public class TokenReceiver {
     private HttpRequest createHttpRequest(String sender) {
         return HttpRequest.newBuilder()
                 .uri(this.uri)
-                .header("Sender", sender)
+                .header("SenderID", sender)
                 .GET()
                 .build();
     }
