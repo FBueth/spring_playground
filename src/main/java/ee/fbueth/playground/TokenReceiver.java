@@ -19,8 +19,7 @@ public class TokenReceiver {
         HttpRequest request = createHttpRequest(sender);
         HttpResponse<String> response = execute(request);
         String tokenResponse = response.body();
-        Token token = new Token(sender, tokenResponse);
-        return token;
+        return new Token(sender, tokenResponse);
     }
 
     private HttpRequest createHttpRequest(String sender) {
