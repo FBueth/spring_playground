@@ -25,7 +25,7 @@ class SMSSender_should {
 
         URI uri = new URI(mockWebServer.url("/").toString());
         sms = new SMS.SMSBuilder().from("123").withName("Florian").to("987").withText("Proekspert").build();
-        String token = "abc";
+        String token = "123_abc";
         smsSender = new SMSSender(uri, token);
     }
 
@@ -56,7 +56,7 @@ class SMSSender_should {
 
         //then
         RecordedRequest recordedRequest = mockWebServer.takeRequest(1, TimeUnit.SECONDS);
-        assertEquals("abc", recordedRequest.getHeader("token"));
+        assertEquals("123_abc", recordedRequest.getHeader("auth"));
     }
 
     @Test

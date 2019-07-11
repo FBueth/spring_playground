@@ -12,7 +12,7 @@ public class TokenReceiver {
 
     public TokenReceiver(URI uri) {
         this.uri = uri;
-        this.httpClient = HttpClient.newBuilder().build();
+        this.httpClient = HttpClient.newHttpClient();
     }
 
     public String requestToken(String sender) {
