@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class SMSSender_should {
 
@@ -45,7 +46,6 @@ class SMSSender_should {
         mockWebServer.enqueue(new MockResponse());
     }
 
-
     @Test
     void send_request_with_token_in_header() throws Exception {
         //given
@@ -57,5 +57,20 @@ class SMSSender_should {
         //then
         RecordedRequest recordedRequest = mockWebServer.takeRequest(1, TimeUnit.SECONDS);
         assertEquals("abc", recordedRequest.getHeader("token"));
+    }
+
+    @Test
+    void throw_exception_when_connection_to_server_failed() throws Exception {
+        //given
+        mockWebServer.shutdown();
+
+        //when
+        try {
+            smsSender.send(sms);
+            fail("Should have thrown exception when connection to server failed");
+        } catch (IllegalStateException e) {
+            assertEquals("Could not connect to server.", e.getMessage());
+        }
+
     }
 }
