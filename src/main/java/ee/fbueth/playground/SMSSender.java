@@ -10,10 +10,10 @@ public class SMSSender {
     private static final String CONTENT_TYPE = "content-type";
 
     private URI uri;
-    private String token;
+    private Token token;
     private HttpClient httpClient;
 
-    public SMSSender(URI uri, String token) {
+    public SMSSender(URI uri, Token token) {
         this.uri = uri;
         this.token = token;
         httpClient = HttpClient.newHttpClient();
@@ -31,7 +31,7 @@ public class SMSSender {
         return HttpRequest.newBuilder()
                 .uri(uri)
                 .header(CONTENT_TYPE, "application/json")
-                .header("auth", token)
+                .header("auth", token.getTokenValue())
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
     }
