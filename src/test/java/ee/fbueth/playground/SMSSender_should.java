@@ -71,6 +71,47 @@ class SMSSender_should {
         } catch (IllegalStateException e) {
             assertEquals("Could not connect to server.", e.getMessage());
         }
+    }
 
+    @Test
+    void throw_illegal_state_exception_when_server_says_500() {
+        // given
+        mockWebServer.enqueue(new MockResponse().setResponseCode(500).setBody("NullPointer... :D"));
+
+        // when
+        try {
+            smsSender.send(sms);
+            fail("should have thrown exception when server does not respond with status 200");
+        } catch (IllegalStateException e) {
+            assertEquals("500 - Server Error: NullPointer... :D", e.getMessage());
+        }
+    }
+
+    @Test
+    void throw_illegal_argument_exception_when_server_says_400() {
+        // given
+        mockWebServer.enqueue(new MockResponse().setResponseCode(400).setBody("bad request my friend"));
+
+        // when
+        try {
+            smsSender.send(sms);
+            fail("should have thrown exception when server does not respond with status 200");
+        } catch (IllegalArgumentException e) {
+            assertEquals("400 - Client Error: bad request my friend", e.getMessage());
+        }
+    }
+
+    @Test
+    void throw_illegal_state_exception_when_server_says_300() {
+        // given
+        mockWebServer.enqueue(new MockResponse().setResponseCode(300).setBody("What is this"));
+
+        // when
+        try {
+            smsSender.send(sms);
+            fail("should have thrown exception when server does not respond with status 200");
+        } catch (IllegalArgumentException e) {
+            assertEquals("300 - Redirected: What is this", e.getMessage());
+        }
     }
 }
