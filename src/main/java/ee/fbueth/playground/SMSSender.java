@@ -8,9 +8,9 @@ import java.net.http.HttpResponse;
 
 public class SMSSender {
 
-    URI uri;
-    String token;
-    HttpClient httpClient;
+    private URI uri;
+    private String token;
+    private HttpClient httpClient;
 
     public SMSSender(URI uri, String token) {
         this.uri = uri;
@@ -19,9 +19,9 @@ public class SMSSender {
     }
 
     public void send(SMS sms) {
-        HttpRequest httpRequest = createHttpRequest(sms);
-        HttpResponse httpResponse = execute(httpRequest);
-        handleResponse(httpResponse);
+        HttpRequest request = createHttpRequest(sms);
+        HttpResponse response = execute(request);
+        handleResponse(response);
     }
 
     private HttpRequest createHttpRequest(SMS sms) {
@@ -34,17 +34,41 @@ public class SMSSender {
                 .build();
     }
 
-    private HttpResponse execute(HttpRequest httpRequest) {
+    private HttpResponse execute(HttpRequest request) {
         try {
-            return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException e) {
-            throw new IllegalStateException("Could not connect to server", e);
+            throw new IllegalStateException("Could not connect to server.", e);
         } catch (InterruptedException e) {
-            throw new IllegalStateException("Connection to server interrupted", e);
+            throw new IllegalStateException("Connection to server interrupted.", e);
         }
     }
 
-    private void handleResponse(HttpResponse httpResponse) {
+    private void handleResponse(HttpResponse response) {
+        int statusCode = response.statusCode();
 
+        if (isResponseCode3xx(statusCode)) {
+            throw new IllegalArgumentException(statusCode + " - Redirected: " + response.body());
+        }
+
+        if (isResponseCode4xx(statusCode)) {
+            throw new IllegalArgumentException(statusCode + " - Client Error: " + response.body());
+        }
+
+        if (isResponseCode5xx(statusCode)) {
+            throw new IllegalStateException(statusCode + " - Server Error: " + response.body());
+        }
+    }
+
+    private boolean isResponseCode3xx(int statusCode) {
+        return statusCode > 299 && statusCode <= 399;
+    }
+
+    private boolean isResponseCode4xx(int statusCode) {
+        return statusCode > 399 && statusCode <= 499;
+    }
+
+    private boolean isResponseCode5xx(int statusCode) {
+        return statusCode > 499;
     }
 }
