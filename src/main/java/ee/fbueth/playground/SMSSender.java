@@ -13,7 +13,6 @@ import java.net.http.HttpResponse;
 public class SMSSender {
     private static final String CONTENT_TYPE = "content-type";
 
-    private URI uri;
     private HttpClient httpClient;
     private Configuration configuration;
 
@@ -31,8 +30,9 @@ public class SMSSender {
     private HttpRequest createHttpRequest(SMS sms, Token token) {
         String requestBody = sms.toJson();
 
+        URI uri;
         try {
-            this.uri = new URI (configuration.getSmsUrl());
+            uri = new URI (configuration.getSmsUrl());
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Not a valid URL.", e);
         }

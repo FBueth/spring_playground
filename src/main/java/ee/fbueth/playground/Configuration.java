@@ -7,19 +7,19 @@ public class Configuration {
     private String tokenUrl = "https://micronaut.herokuapp.com/messaging/auth";
     private String smsUrl = "https://micronaut.herokuapp.com/messaging/send";
 
-    public String getTokenUrl() {
+    String getTokenUrl() {
         return tokenUrl;
     }
 
-    public void setTokenUrl(String tokenUrl) {
+    void setTokenUrl(String tokenUrl) {
         this.tokenUrl = tokenUrl;
     }
 
-    public String getSmsUrl() {
+    String getSmsUrl() {
         return smsUrl;
     }
 
-    public void setSmsUrl(String smsUrl) {
+    void setSmsUrl(String smsUrl) {
         this.smsUrl = smsUrl;
     }
 }

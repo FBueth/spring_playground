@@ -12,7 +12,6 @@ import java.net.http.HttpResponse;
 @Component
 public class TokenReceiver {
 
-    private URI uri;
     private HttpClient httpClient;
     private Configuration configuration;
 
