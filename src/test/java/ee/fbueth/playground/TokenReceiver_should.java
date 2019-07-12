@@ -6,7 +6,6 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +20,7 @@ class TokenReceiver_should {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
 
-        Configuration configuration = new Configuration();
+        MyAppConfig configuration = new MyAppConfig();
         configuration.setTokenUrl(mockWebServer.url("/").toString());
         tokenReceiver = new TokenReceiver(configuration);
     }

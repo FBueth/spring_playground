@@ -13,9 +13,9 @@ import java.net.http.HttpResponse;
 public class TokenReceiver {
 
     private HttpClient httpClient;
-    private Configuration configuration;
+    private MyAppConfig configuration;
 
-    public TokenReceiver(Configuration configuration) {
+    public TokenReceiver(MyAppConfig configuration) {
         this.configuration = configuration;
 
         this.httpClient = HttpClient.newHttpClient();

@@ -14,9 +14,9 @@ public class SMSSender {
     private static final String CONTENT_TYPE = "content-type";
 
     private HttpClient httpClient;
-    private Configuration configuration;
+    private MyAppConfig configuration;
 
-    public SMSSender(Configuration configuration) {
+    public SMSSender(MyAppConfig configuration) {
         this.configuration = configuration;
         httpClient = HttpClient.newHttpClient();
     }

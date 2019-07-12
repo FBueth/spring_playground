@@ -43,7 +43,7 @@ class MyFirstController_should {
     }
 
     @Autowired
-    private Configuration configuration;
+    private MyAppConfig configuration;
 
     @Test
     void return_ok_when_send_endpoint_hit() throws IOException {
