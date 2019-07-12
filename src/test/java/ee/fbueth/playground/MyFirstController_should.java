@@ -46,7 +46,7 @@ class MyFirstController_should {
     private Configuration configuration;
 
     @Test
-    void request_a_token_when_send_endpoint_hit() throws IOException {
+    void return_ok_when_send_endpoint_hit() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
         mockWebServer.start();
         mockWebServer.enqueue(new MockResponse().setBody("anytoken"));
@@ -63,7 +63,7 @@ class MyFirstController_should {
         when().
             post("/send").
         then().
-            statusCode(200).assertThat().body(equalTo("123_anytoken"));
+            statusCode(200).assertThat().body(equalTo("Ok"));
     }
 
 }

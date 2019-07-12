@@ -36,6 +36,6 @@ public class MyFirstController {
         String sender = sms.getSender();
         Token token = tokenReceiver.requestToken(sender);
         smsSender.send(sms, token);
-        return new ResponseEntity<>(token.getTokenValue(), HttpStatus.OK);
+        return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 }
