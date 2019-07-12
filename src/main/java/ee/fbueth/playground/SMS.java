@@ -15,8 +15,8 @@ public class SMS {
     }
 
     String toJson() {
-        String template = "{\"senderNumber\":\"%s\",\"senderName\":\"%s\",\"receiver\":%s,\"text\":\"%s\"}";
-        return String.format(template, this.senderNumber, this.senderName, this.receiver, this.text);
+        String template = "{\"text\":\"%s\",\"to\":\"%s\",\"from\":%s,\"display_name\":\"%s\"}";
+        return String.format(template, this.text, this.receiver, this.senderNumber, this.senderName);
     }
 
     String getSender() {

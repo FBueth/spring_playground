@@ -35,7 +35,7 @@ public class MyFirstController {
         SMS sms = new SMS.SMSBuilder().from(smsdto.getSenderNumber()).withName(smsdto.getSenderName()).to(smsdto.getReceiver()).withText(smsdto.getText()).build();
         String sender = sms.getSender();
         Token token = tokenReceiver.requestToken(sender);
-        //smsSender.send(sms, token);
+        smsSender.send(sms, token);
         return new ResponseEntity<>(token.getTokenValue(), HttpStatus.OK);
     }
 }
