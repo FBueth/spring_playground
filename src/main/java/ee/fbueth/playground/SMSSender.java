@@ -15,13 +15,10 @@ public class SMSSender {
 
     private URI uri;
     private HttpClient httpClient;
+    private Configuration configuration;
 
     public SMSSender(Configuration configuration) {
-        try {
-            this.uri = new URI (configuration.getSmsUrl());
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException("Not a valid URL.", e);
-        }
+        this.configuration = configuration;
         httpClient = HttpClient.newHttpClient();
     }
 
@@ -33,6 +30,12 @@ public class SMSSender {
 
     private HttpRequest createHttpRequest(SMS sms, Token token) {
         String requestBody = sms.toJson();
+
+        try {
+            this.uri = new URI (configuration.getSmsUrl());
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Not a valid URL.", e);
+        }
 
         return HttpRequest.newBuilder()
                 .uri(uri)

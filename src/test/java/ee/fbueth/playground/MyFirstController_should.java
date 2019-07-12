@@ -50,9 +50,11 @@ class MyFirstController_should {
         MockWebServer mockWebServer = new MockWebServer();
         mockWebServer.start();
         mockWebServer.enqueue(new MockResponse().setBody("anytoken"));
+        mockWebServer.enqueue(new MockResponse());
 
         String url = mockWebServer.url("/").toString();
         configuration.setTokenUrl(url);
+        configuration.setSmsUrl(url);
 
         given().
             port(port).
