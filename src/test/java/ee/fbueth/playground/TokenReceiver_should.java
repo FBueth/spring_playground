@@ -21,8 +21,9 @@ class TokenReceiver_should {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
 
-        URI uri = new URI(mockWebServer.url("/").toString());
-        tokenReceiver = new TokenReceiver(uri);
+        Configuration configuration = new Configuration();
+        configuration.setTokenUrl(mockWebServer.url("/").toString());
+        tokenReceiver = new TokenReceiver(configuration);
     }
 
     @Test

@@ -1,17 +1,24 @@
 package ee.fbueth.playground;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Component
 public class TokenReceiver {
+
     private URI uri;
     private HttpClient httpClient;
+    private Configuration configuration;
 
-    public TokenReceiver(URI uri) {
-        this.uri = uri;
+    public TokenReceiver(Configuration configuration) {
+        this.configuration = configuration;
+
         this.httpClient = HttpClient.newHttpClient();
     }
 
@@ -23,8 +30,14 @@ public class TokenReceiver {
     }
 
     private HttpRequest createHttpRequest(String sender) {
+        URI uri;
+        try {
+            uri = new URI(configuration.getTokenUrl());
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Not a valid URL.", e);
+        }
         return HttpRequest.newBuilder()
-                .uri(this.uri)
+                .uri(uri)
                 .header("sender", sender)
                 .GET()
                 .build();

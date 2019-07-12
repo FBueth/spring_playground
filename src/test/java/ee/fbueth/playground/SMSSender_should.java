@@ -17,15 +17,17 @@ class SMSSender_should {
     private MockWebServer mockWebServer;
     private SMSSender smsSender;
     private SMS sms;
+    private Token token;
 
     @BeforeEach
     void setUp() throws Exception {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
 
-        URI uri = new URI(mockWebServer.url("/").toString());
-        Token token = new Token("123", "abc");
-        smsSender = new SMSSender(uri, token);
+        token = new Token("123", "abc");
+        Configuration configuration = new Configuration();
+        configuration.setSmsUrl(mockWebServer.url("/").toString());
+        smsSender = new SMSSender(configuration);
         sms = new SMS.SMSBuilder().from("123456789").withName("Me").to("987654321").withText("Hello world!").build();
     }
 
@@ -35,7 +37,7 @@ class SMSSender_should {
         givenServerRespondingWithStatus200();
 
         //when
-        smsSender.send(sms);
+        smsSender.send(sms, token);
 
         //then
         RecordedRequest recordedRequest = mockWebServer.takeRequest(1, TimeUnit.SECONDS);
@@ -52,7 +54,7 @@ class SMSSender_should {
         givenServerRespondingWithStatus200();
 
         //when
-        smsSender.send(sms);
+        smsSender.send(sms, token);
 
         //then
         RecordedRequest recordedRequest = mockWebServer.takeRequest(1, TimeUnit.SECONDS);
@@ -66,7 +68,7 @@ class SMSSender_should {
 
         //when
         try {
-            smsSender.send(sms);
+            smsSender.send(sms, token);
             fail("Should have thrown exception when connection to server failed");
         } catch (IllegalStateException e) {
             assertEquals("Could not connect to server.", e.getMessage());
@@ -80,7 +82,7 @@ class SMSSender_should {
 
         // when
         try {
-            smsSender.send(sms);
+            smsSender.send(sms, token);
             fail("should have thrown exception when server does not respond with status 200");
         } catch (IllegalStateException e) {
             assertEquals("500 - Server Error: NullPointer... :D", e.getMessage());
@@ -94,7 +96,7 @@ class SMSSender_should {
 
         // when
         try {
-            smsSender.send(sms);
+            smsSender.send(sms, token);
             fail("should have thrown exception when server does not respond with status 200");
         } catch (IllegalArgumentException e) {
             assertEquals("400 - Client Error: bad request my friend", e.getMessage());
@@ -108,7 +110,7 @@ class SMSSender_should {
 
         // when
         try {
-            smsSender.send(sms);
+            smsSender.send(sms, token);
             fail("should have thrown exception when server does not respond with status 200");
         } catch (IllegalArgumentException e) {
             assertEquals("300 - Redirected: What is this", e.getMessage());

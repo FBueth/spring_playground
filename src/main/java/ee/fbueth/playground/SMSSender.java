@@ -1,31 +1,37 @@
 package ee.fbueth.playground;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Component
 public class SMSSender {
     private static final String CONTENT_TYPE = "content-type";
 
     private URI uri;
-    private Token token;
     private HttpClient httpClient;
 
-    public SMSSender(URI uri, Token token) {
-        this.uri = uri;
-        this.token = token;
+    public SMSSender(Configuration configuration) {
+        try {
+            this.uri = new URI (configuration.getSmsUrl());
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Not a valid URL.", e);
+        }
         httpClient = HttpClient.newHttpClient();
     }
 
-    public void send(SMS sms) {
-        HttpRequest request = createHttpRequest(sms);
+    public void send(SMS sms, Token token) {
+        HttpRequest request = createHttpRequest(sms, token);
         HttpResponse response = execute(request);
         handleResponse(response);
     }
 
-    private HttpRequest createHttpRequest(SMS sms) {
+    private HttpRequest createHttpRequest(SMS sms, Token token) {
         String requestBody = sms.toJson();
 
         return HttpRequest.newBuilder()

@@ -19,6 +19,10 @@ public class SMS {
         return String.format(template, this.senderNumber, this.senderName, this.receiver, this.text);
     }
 
+    String getSender() {
+        return this.senderNumber;
+    }
+
     public static class SMSBuilder {
         private String senderNumber;
         private String senderName;
