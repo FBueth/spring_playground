@@ -15,10 +15,9 @@ public class TokenReceiver {
     private HttpClient httpClient;
     private MyAppConfig configuration;
 
-    public TokenReceiver(MyAppConfig configuration) {
+    public TokenReceiver(MyAppConfig configuration, HttpClient httpClient) {
         this.configuration = configuration;
-
-        this.httpClient = HttpClient.newHttpClient();
+        this.httpClient = httpClient;
     }
 
     public Token requestToken(String sender) {

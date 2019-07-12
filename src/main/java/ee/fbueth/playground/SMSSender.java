@@ -1,5 +1,6 @@
 package ee.fbueth.playground;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,9 +17,9 @@ public class SMSSender {
     private HttpClient httpClient;
     private MyAppConfig configuration;
 
-    public SMSSender(MyAppConfig configuration) {
+    public SMSSender(MyAppConfig configuration, HttpClient httpClient) {
         this.configuration = configuration;
-        httpClient = HttpClient.newHttpClient();
+        this.httpClient = httpClient;
     }
 
     public void send(SMS sms, Token token) {
@@ -39,7 +40,7 @@ public class SMSSender {
 
         return HttpRequest.newBuilder()
                 .uri(uri)
-                .header(CONTENT_TYPE, "application/json")
+                .header(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header("auth", token.getTokenValue())
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
@@ -48,10 +49,8 @@ public class SMSSender {
     private HttpResponse execute(HttpRequest request) {
         try {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             throw new IllegalStateException("Could not connect to server.", e);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException("Connection to server interrupted.", e);
         }
     }
 

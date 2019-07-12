@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyFirstController {
 
-    private TokenReceiver tokenReceiver;
-    private SMSSender smsSender;
+    private SendSMS sendSMS;
 
-    public MyFirstController(TokenReceiver tokenReceiver, SMSSender smsSender) {
-        this.tokenReceiver = tokenReceiver;
-        this.smsSender = smsSender;
+    public MyFirstController(SendSMS sendSMS) {
+        this.sendSMS = sendSMS;
     }
 
     @GetMapping("/greeting")
@@ -33,9 +31,7 @@ public class MyFirstController {
             @RequestBody SMSDTO smsdto
     ) {
         SMS sms = new SMS.SMSBuilder().from(smsdto.getSenderNumber()).withName(smsdto.getSenderName()).to(smsdto.getReceiver()).withText(smsdto.getText()).build();
-        String sender = sms.getSender();
-        Token token = tokenReceiver.requestToken(sender);
-        smsSender.send(sms, token);
+        sendSMS.send(sms);
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.http.HttpClient;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +27,7 @@ class SMSSender_should {
         token = new Token("123", "abc");
         MyAppConfig configuration = new MyAppConfig();
         configuration.setSmsUrl(mockWebServer.url("/").toString());
-        smsSender = new SMSSender(configuration);
+        smsSender = new SMSSender(configuration, HttpClient.newHttpClient());
         sms = new SMS.SMSBuilder().from("123456789").withName("Me").to("987654321").withText("Hello world!").build();
     }
 
