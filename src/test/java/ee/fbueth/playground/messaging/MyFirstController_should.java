@@ -1,5 +1,6 @@
 package ee.fbueth.playground.messaging;
 
+import ee.fbueth.playground.PlaygroundApplication;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;

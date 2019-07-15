@@ -1,8 +1,11 @@
 package ee.fbueth.playground.messagingAuth;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 import java.util.stream.Collectors;
 
+@Component
 public class TokenCreator {
 
     public String create() {

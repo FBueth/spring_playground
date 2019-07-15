@@ -17,6 +17,6 @@ class TokenRepository_should {
         tokenRepository.save(sender, token);
 
         //then
-        assertThat(tokenRepository.getToken("abc")).isEqualTo(token);
+        assertThat(tokenRepository.findToken("abc")).isEqualTo(token);
     }
 }
