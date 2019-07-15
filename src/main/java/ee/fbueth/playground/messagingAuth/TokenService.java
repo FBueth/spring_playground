@@ -10,4 +10,8 @@ public class TokenService {
         tokenRepository.save(sender, token);
         return token;
     }
+
+    public String getToken(String sender) {
+        return tokenRepository.getToken(sender);
+    }
 }
