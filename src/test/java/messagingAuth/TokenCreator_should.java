@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TokenCreator_should {
+
     @Test
-    void return_42_when_no_input_provided() {
+    void return_string_of_length_5() {
         //given
         TokenCreator tokenCreator = new TokenCreator();
 
@@ -14,6 +15,6 @@ class TokenCreator_should {
         String token = tokenCreator.create();
 
         //then
-        assertThat(token).isEqualTo("42");
+        assertThat(token).hasSize(5);
     }
 }
